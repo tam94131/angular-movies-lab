@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html ng-app="something">
+<head>
+	<title>Some test app for Angular</title>
+	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.6/angular.js"></script>
+	<script src="app.js"></script>
+</head>
+<body>
+	<h1>Welcome to the app!</h1>
+
+	<div ng-controller="MovieCtrl as movies">
+		<h2>There are {{ movies.moviesToWatch.length }}
+			<ng-pluralize count="movies.moviesToWatch.length"
+               when="{'1': 'movie',
+               'other': 'movies'}">
+			</ng-pluralize>
+			to watch.
+		</h2>
+		<!-- <h2> First one: {{ movies.moviesToWatch[0].title }} </h2> -->
+
+		<span>Filter it:</span>
+		<input type="text" ng-model="searchTitle" />
+
+		<ul ng-repeat="movie in movies.moviesToWatch | orderBy:'title' | filter:searchTitle">
+			<li>{{movie.title}}
+			<a href="#" ng-click="movies.deleteMovie(movie)">X</a>
+			</li>
+		</ul>
+
+		<form ng-submit="movies.submit()">
+			<span>New movie:</span>
+			<input type="text" ng-model="movies.text" name="text" />
+			<input type="submit" id="submit" value="submit" />
+		</form>
+
+	</div>
+</body>
+</html>
